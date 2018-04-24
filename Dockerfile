@@ -44,7 +44,7 @@ RUN yum install -y centos-release-scl-rh && \
     INSTALL_PKGS="rsync tar gettext bind-utils nss_wrapper rh-postgresql96 rh-postgresql96-postgresql-contrib rh-postgresql95-postgresql-server" && \
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    rpm --import /etc/pki/rpm-gpg/RPM* && \
+    yum clean all && \
     rpm -ivh http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&\
     #yum -y install http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm &&\
     #yum -y install https://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm &&\
