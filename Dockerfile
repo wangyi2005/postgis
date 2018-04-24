@@ -44,11 +44,11 @@ RUN yum install -y centos-release-scl-rh && \
     INSTALL_PKGS="rsync tar gettext bind-utils nss_wrapper rh-postgresql96 rh-postgresql96-postgresql-contrib rh-postgresql95-postgresql-server" && \
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    yum -y install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&\
-    #yum -y install http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm &&\
-    yum -y install https://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/postgis24_96-2.4.4-1.rhel7.x86_64.rpm &&\
-    yum -y installhttps://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/postgis24_96-client-2.4.4-1.rhel7.x86_64.rpm &&\
-    # yum -y install postgis24_96 postgis24_96-client &&\
+    #yum -y install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&\
+    yum -y install http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm &&\
+    #yum -y install https://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/postgis24_96-2.4.4-1.rhel7.x86_64.rpm &&\
+    #yum -y installhttps://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/postgis24_96-client-2.4.4-1.rhel7.x86_64.rpm &&\
+    yum -y install postgis24_96-2.4.4-1.rhel7.x86_64 postgis24_96-client-2.4.4-1.rhel7.x86_64 &&\
     yum clean all && \
     localedef -f UTF-8 -i en_US en_US.UTF-8 && \
     test "$(id postgres)" = "uid=26(postgres) gid=26(postgres) groups=26(postgres)" && \
