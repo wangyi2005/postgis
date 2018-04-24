@@ -44,9 +44,9 @@ RUN yum install -y centos-release-scl-rh && \
     INSTALL_PKGS="rsync tar gettext bind-utils nss_wrapper rh-postgresql96 rh-postgresql96-postgresql-contrib rh-postgresql95-postgresql-server" && \
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    #yum install epel-release &&\
-    #yum -y install http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm &&\
-    yum -y install https://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm &&\
+    yum install epel-release &&\
+    yum -y install http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm &&\
+    #yum -y install https://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm &&\
     yum -y install postgis2_96 postgis2_96-client &&\
     yum clean all && \
     localedef -f UTF-8 -i en_US en_US.UTF-8 && \
