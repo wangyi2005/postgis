@@ -33,10 +33,13 @@ LABEL summary="$SUMMARY" \
       usage="docker run -d --name postgresql_database -e POSTGRESQL_USER=user -e POSTGRESQL_PASSWORD=pass -e POSTGRESQL_DATABASE=db -p 5432:5432 centos/postgresql-96-centos7" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
 
-EXPOSE 5432
-
-COPY root/usr/libexec/fix-permissions /usr/libexec/fix-permissions
-RUN chmod +x /usr/libexec/fix-permissions 
+COPY root /
+COPY ./s2i/bin/ $STI_SCRIPTS_PATH
+RUN chmod +x /usr/libexec/fix-permissions &&\
+    chmod +x /usr/bin/container-entrypoint &&\
+    chmod +x /usr/bin/run-postgresql &&\
+    chmod +x /usr/share/container-scripts/postgresql/common.sh &&\
+    chmod +x /usr/share/container-scripts/postgresql/start/set_passwords.sh
 
 # This image must forever use UID 26 for postgres user so our volumes are
 # safe in the future. This should *never* change, the last test is there
@@ -45,8 +48,10 @@ RUN chmod +x /usr/libexec/fix-permissions
 RUN rpm -Uvh http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm && \
     yum -y update && yum -y install epel-release && \
     yum -y update glibc-common && \
-    yum -y install bind-utils gettext hostname nss_wrapper openssh-server procps-ng rsync &&\
-    yum -y install postgresql96-server postgresql96-contrib postgresql96 R-core libRmath plr96 pgaudit_96 pgbackrest postgis24_96 postgis24_96-client && \
+    #yum -y install bind-utils gettext hostname nss_wrapper openssh-server procps-ng rsync &&\
+    #yum -y install postgresql96-server postgresql96-contrib postgresql96 R-core libRmath plr96 pgaudit_96 pgbackrest postgis24_96 postgis24_96-client && \
+    yum -y install bind-utils gettext hostname nss_wrapper &&\
+    yum -y install postgresql96-server postgresql96-contrib postgresql96  plr96 pgaudit_96 pgbackrest postgis24_96 postgis24_96-client && \
     yum -y clean all && \
     localedef -f UTF-8 -i en_US en_US.UTF-8 && \
     test "$(id postgres)" = "uid=26(postgres) gid=26(postgres) groups=26(postgres)" && \
@@ -57,14 +62,6 @@ RUN rpm -Uvh http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_
 # Get prefix path and path to scripts rather than hard-code them in scripts
 ENV CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/postgresql \
     ENABLED_COLLECTIONS=rh-postgresql96
-
-COPY root /
-COPY ./s2i/bin/ $STI_SCRIPTS_PATH
-RUN chmod +x /usr/libexec/fix-permissions &&\
-    chmod +x /usr/bin/container-entrypoint &&\
-    chmod +x /usr/bin/run-postgresql &&\
-    chmod +x /usr/share/container-scripts/postgresql/common.sh &&\
-    chmod +x /usr/share/container-scripts/postgresql/start/set_passwords.sh
     
 # When bash is started non-interactively, to run a shell script, for example it
 # looks for this variable and source the content of this file. This will enable
@@ -77,8 +74,9 @@ VOLUME ["/var/lib/pgsql/data"]
 
 # {APP_DATA} needs to be accessed by postgres user while s2i assembling
 # postgres user changes permissions of files in APP_DATA during assembling
-RUN /usr/libexec/fix-permissions ${APP_DATA} && \
-    usermod -a -G root postgres
+RUN /usr/libexec/fix-permissions ${APP_DATA} && usermod -a -G root postgres
+
+EXPOSE 5432
 
 USER 26
 
