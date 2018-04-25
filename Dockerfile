@@ -41,16 +41,14 @@ COPY root/usr/libexec/fix-permissions /usr/libexec/fix-permissions
 # safe in the future. This should *never* change, the last test is there
 # to make sure of that.
 RUN yum install -y centos-release-scl-rh && \
-    INSTALL_PKGS="rsync tar gettext bind-utils nss_wrapper rh-postgresql96 rh-postgresql96-postgresql-contrib rh-postgresql95-postgresql-server" && \
+    #INSTALL_PKGS="rsync tar gettext bind-utils nss_wrapper rh-postgresql96 rh-postgresql96-postgresql-contrib rh-postgresql95-postgresql-server" && \
+    INSTALL_PKGS="rsync tar gettext bind-utils nss_wrapper " && \
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    yum clean all && \
-    rpm --rebuilddb &&\
-    yum update && \
-    yum -y install http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm &&\
+    rpm -ivh http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm &&\
     #yum -y install https://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/postgis24_96-2.4.4-1.rhel7.x86_64.rpm &&\
     #yum -y installhttps://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/postgis24_96-client-2.4.4-1.rhel7.x86_64.rpm &&\
-    yum -y install postgis24_96-2.4.4-1.rhel7.x86_64 postgis24_96-client-2.4.4-1.rhel7.x86_64 &&\
+    yum -y install postgresql96 postgresql96-contrib postgresql96-libs postgresql96-server postgis24_96 postgis24_96-client &&\
     yum clean all && \
     localedef -f UTF-8 -i en_US en_US.UTF-8 && \
     test "$(id postgres)" = "uid=26(postgres) gid=26(postgres) groups=26(postgres)" && \
