@@ -41,8 +41,7 @@ COPY root/usr/libexec/fix-permissions /usr/libexec/fix-permissions
 # safe in the future. This should *never* change, the last test is there
 # to make sure of that.
 
-RUN yum install -y centos-release-scl-rh && \
-    rpm -Uvh http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm && \
+RUN rpm -Uvh http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm && \
     yum -y update && yum -y install epel-release && \
     yum -y update glibc-common && \
     yum -y install bind-utils gettext hostname nss_wrapper openssh-server procps-ng rsync &&\
@@ -51,6 +50,7 @@ RUN yum install -y centos-release-scl-rh && \
     localedef -f UTF-8 -i en_US en_US.UTF-8 && \
     test "$(id postgres)" = "uid=26(postgres) gid=26(postgres) groups=26(postgres)" && \
     mkdir -p /var/lib/pgsql/data && \
+    chmod +x /usr/libexec/fix-permissions && \
     /usr/libexec/fix-permissions /var/lib/pgsql && \
     /usr/libexec/fix-permissions /var/run/postgresql
 
