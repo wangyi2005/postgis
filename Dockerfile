@@ -54,7 +54,7 @@ RUN yum install -y centos-release-scl-rh && \
     #yum -y install bind-utils gettext hostname nss_wrapper openssh-server procps-ng rsync &&\
     #yum -y install postgresql96-server postgresql96-contrib postgresql96 R-core libRmath plr96 pgaudit_96 pgbackrest postgis24_96 postgis24_96-client && \
     yum -y install bind-utils gettext hostname nss_wrapper &&\
-    yum -y install postgresql96-server postgresql96-contrib postgresql96  plr96 pgaudit_96 pgbackrest postgis24_96 postgis24_96-client && \
+    yum -y install rh-postgresql96 rh-postgresql96-postgresql-contrib rh-postgresql95-postgresql-server  plr96 pgaudit_96 pgbackrest postgis24_96 postgis24_96-client && \
     yum -y clean all && \
     localedef -f UTF-8 -i en_US en_US.UTF-8 && \
     test "$(id postgres)" = "uid=26(postgres) gid=26(postgres) groups=26(postgres)" && \
