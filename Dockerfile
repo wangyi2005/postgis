@@ -42,12 +42,11 @@ COPY root/usr/libexec/fix-permissions /usr/libexec/fix-permissions
 # to make sure of that.
 RUN yum install -y centos-release-scl-rh && \
     #INSTALL_PKGS="rsync tar gettext bind-utils nss_wrapper rh-postgresql96 rh-postgresql96-postgresql-contrib rh-postgresql95-postgresql-server" && \
-    INSTALL_PKGS="rsync tar gettext bind-utils nss_wrapper " && \
+    INSTALL_PKGS="rsync tar gettext bind-utils nss_wrapper gdal" && \
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     rpm -ivh http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm &&\
     rpm -ivh http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &&\
-    yum update --exclude=gdal &&\
     #yum -y install https://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/postgis24_96-2.4.4-1.rhel7.x86_64.rpm &&\
     #yum -y installhttps://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/postgis24_96-client-2.4.4-1.rhel7.x86_64.rpm &&\
     yum -y install postgresql96 postgresql96-contrib postgresql96-libs postgresql96-server postgresql96-devel postgis24_96 postgis24_96-client &&\
