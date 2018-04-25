@@ -36,13 +36,7 @@ LABEL summary="$SUMMARY" \
 COPY root /
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 RUN chmod +x -R /usr
-    #chmod +x /usr/libexec/fix-permissions &&\
-    #chmod +x /usr/bin/container-entrypoint &&\
-    #chmod +x /usr/bin/run-postgresql &&\
-    #chmod +x /usr/bin/cgroup-limits &&\
-    #chmod +x /usr/share/container-scripts/postgresql/common.sh &&\
-    #chmod +x /usr/share/container-scripts/postgresql/start/set_passwords.sh
-
+    
 # This image must forever use UID 26 for postgres user so our volumes are
 # safe in the future. This should *never* change, the last test is there
 # to make sure of that.
@@ -56,6 +50,7 @@ RUN yum install -y centos-release-scl-rh && \
     yum -y install bind-utils gettext hostname nss_wrapper &&\
     yum -y install rh-postgresql96 rh-postgresql96-postgresql-contrib rh-postgresql95-postgresql-server  plr96 pgaudit_96 pgbackrest postgis24_96 postgis24_96-client && \
     yum -y clean all && \
+    rm -rf /var/cache/yum/* && \
     localedef -f UTF-8 -i en_US en_US.UTF-8 && \
     test "$(id postgres)" = "uid=26(postgres) gid=26(postgres) groups=26(postgres)" && \
     mkdir -p /var/lib/pgsql/data && \
