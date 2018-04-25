@@ -41,7 +41,8 @@ COPY root/usr/libexec/fix-permissions /usr/libexec/fix-permissions
 # safe in the future. This should *never* change, the last test is there
 # to make sure of that.
 
-RUN rpm -Uvh http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm && \
+RUN yum install -y centos-release-scl-rh && \
+    rpm -Uvh http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm && \
     yum -y update && yum -y install epel-release && \
     yum -y update glibc-common && \
     yum -y install bind-utils gettext hostname nss_wrapper openssh-server procps-ng rsync &&\
