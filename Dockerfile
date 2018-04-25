@@ -60,7 +60,12 @@ ENV CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/postgresql \
 
 COPY root /
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
-
+RUN chmod +x /usr/libexec/fix-permissions &&\
+    chmod +x /usr/bin/container-entrypoint &&\
+    chmod +x /usr/bin/run-postgresql &&\
+    chmod +x /usr/share/container-scripts/postgresql/common.sh &&\
+    chmod +x /usr/share/container-scripts/postgresql/start/set_passwords.sh
+    
 # When bash is started non-interactively, to run a shell script, for example it
 # looks for this variable and source the content of this file. This will enable
 # the SCL for all scripts without need to do 'scl enable'.
