@@ -35,17 +35,20 @@ LABEL summary="$SUMMARY" \
 
 COPY root /
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
-RUN chmod +x /usr/libexec/fix-permissions &&\
-    chmod +x /usr/bin/container-entrypoint &&\
-    chmod +x /usr/bin/run-postgresql &&\
-    chmod +x /usr/share/container-scripts/postgresql/common.sh &&\
-    chmod +x /usr/share/container-scripts/postgresql/start/set_passwords.sh
+RUN chmod +x -R /usr
+    #chmod +x /usr/libexec/fix-permissions &&\
+    #chmod +x /usr/bin/container-entrypoint &&\
+    #chmod +x /usr/bin/run-postgresql &&\
+    #chmod +x /usr/bin/cgroup-limits &&\
+    #chmod +x /usr/share/container-scripts/postgresql/common.sh &&\
+    #chmod +x /usr/share/container-scripts/postgresql/start/set_passwords.sh
 
 # This image must forever use UID 26 for postgres user so our volumes are
 # safe in the future. This should *never* change, the last test is there
 # to make sure of that.
 
-RUN rpm -Uvh http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm && \
+RUN yum install -y centos-release-scl-rh && \
+    rpm -Uvh http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm && \
     yum -y update && yum -y install epel-release && \
     yum -y update glibc-common && \
     #yum -y install bind-utils gettext hostname nss_wrapper openssh-server procps-ng rsync &&\
