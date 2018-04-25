@@ -48,7 +48,7 @@ RUN yum install -y centos-release-scl-rh && \
     rpm -ivh http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm &&\
     #yum -y install https://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/postgis24_96-2.4.4-1.rhel7.x86_64.rpm &&\
     #yum -y installhttps://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/postgis24_96-client-2.4.4-1.rhel7.x86_64.rpm &&\
-    yum -y install postgresql96 postgresql96-contrib postgresql96-libs postgresql96-server postgis24_96 postgis24_96-client &&\
+    yum -y install postgresql96 postgresql96-contrib postgresql96-libs postgresql96-server postgresql96-devel postgis24_96 postgis24_96-client &&\
     yum clean all && \
     localedef -f UTF-8 -i en_US en_US.UTF-8 && \
     test "$(id postgres)" = "uid=26(postgres) gid=26(postgres) groups=26(postgres)" && \
