@@ -51,7 +51,7 @@ RUN yum install -y centos-release-scl-rh && \
     yum -y install rh-postgresql96 rh-postgresql96-postgresql-contrib rh-postgresql95-postgresql-server  plr96 pgaudit_96 pgbackrest postgis24_96 postgis24_96-client && \
     yum -y clean all && \
     rm -rf /var/cache/yum && \
-    cp -r /usr/pgsql-9.6/share/extension /opt/rh/rh-postgresql96/root/usr/share/pgsql/extension && \
+    cp /usr/pgsql-9.6/share/extension/* /opt/rh/rh-postgresql96/root/usr/share/pgsql/extension && \
     localedef -f UTF-8 -i en_US en_US.UTF-8 && \
     test "$(id postgres)" = "uid=26(postgres) gid=26(postgres) groups=26(postgres)" && \
     mkdir -p /var/lib/pgsql/data && \
