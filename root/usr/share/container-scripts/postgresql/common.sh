@@ -183,12 +183,8 @@ function create_users() {
   if [[ ",$postinitdb_actions," = *,simple_db,* ]]; then
     createuser "$POSTGRESQL_USER"
     createdb --owner="$POSTGRESQL_USER" "$POSTGRESQL_DATABASE"
-    "${psql[@]}" --dbname="$POSTGRESQL_DATABASE" <<-'EOSQL'
-		CREATE EXTENSION  postgis;
-		CREATE EXTENSION  postgis_topology;
-		CREATE EXTENSION  postgis_sfcgal;
-		CREATE EXTENSION  postgis_tiger_geocoder;
-EOSQL
+    psql -d "$POSTGRESQL_DATABASE" -c "CREATE EXTENSION postgis;"
+    psql -d "$POSTGRESQL_DATABASE" -c "CREATE EXTENSION  postgis_topology;"
   fi
 
   if [ -v POSTGRESQL_MASTER_USER ]; then
