@@ -47,8 +47,8 @@ RUN yum install -y centos-release-scl-rh && \
     yum -y update glibc-common && \
     yum -y install bind-utils gettext hostname nss_wrapper &&\
     #yum -y install bind-utils gettext hostname nss_wrapper openssh-server procps-ng rsync &&\
-    yum -y install postgresql96-server postgresql96-contrib postgresql96 plr96 pgaudit_96 pgbackrest postgis24_96 postgis24_96-client && \
-    #yum -y install rh-postgresql96 rh-postgresql96-postgresql-contrib rh-postgresql95-postgresql-server  plr96 pgaudit_96 pgbackrest postgis24_96 postgis24_96-client && \
+    #yum -y install postgresql96-server postgresql96-contrib postgresql96 plr96 pgaudit_96 pgbackrest postgis24_96 postgis24_96-client && \
+    yum -y install rh-postgresql96 rh-postgresql96-postgresql-contrib rh-postgresql95-postgresql-server  plr96 pgaudit_96 pgbackrest postgis24_96 postgis24_96-client && \
     yum -y clean all && \
     rm -rf /var/cache/yum && \
     #cp /usr/pgsql-9.6/share/extension/* /opt/rh/rh-postgresql96/root/usr/share/pgsql/extension && \
