@@ -27,7 +27,7 @@ else
   try_pgupgrade
 fi
 
-pg_ctl -w start -o "-h ''"
+pg_ctl -w start -o "-h '' -c listen_addresses='*'"
 if $PG_INITIALIZED ; then
     process_extending_files \
         "${APP_DATA}/src/postgresql-init" \
